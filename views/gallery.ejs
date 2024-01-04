@@ -1,0 +1,35 @@
+<!-- views/gallery.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Gallery</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <img src="/uploads/image-1703268961801.jpg" alt="hello">
+  <h1>Image Gallery</h1>
+  <div id="imageContainer"></div>
+
+  <script>
+    fetch('/images')
+      .then(response => response.json())
+      .then(data => {
+        const imageContainer = document.getElementById('imageContainer');
+        data.forEach(image => {
+          const imgElement = document.createElement('img');
+          imgElement.src = image.path;
+
+          console.log(image.path);
+
+          imgElement.alt = 'Image';
+          imageContainer.appendChild(imgElement);
+        });
+      })   
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  </script>
+</body>
+</html>

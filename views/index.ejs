@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Upload App</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <img src="/uploads/image-1703268961801.jpg" alt="hello">
+  <h1>Image Upload App</h1>
+  <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+    <input type="file" id="imageInput" name="image" accept="image/*" />
+    <button type="button" onclick="uploadImage()">Upload</button>
+  </form>
+  <div id="message"></div>
+  <a href="/gallery">View Gallery</a>
+
+  <script>
+    function uploadImage() {
+      var formData = new FormData(document.getElementById('uploadForm'));
+
+      fetch('/upload', {
+        method: 'POST',
+        body: formData,
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('message').innerHTML = data.msg;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+  </script>
+</body>
+</html>
+
+
